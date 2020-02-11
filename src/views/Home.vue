@@ -3,7 +3,7 @@
     <img alt="Vue logo" src="../assets/img/logo.png"><br/>
     <img :src="url">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <p>{{ food }}</p>
+    <p :style="{ color:fontColor }">{{ food }}</p>
     <button @click="handleClick('back')">返回上一页</button>
     <button @click="handleClick('push')">跳转到child</button>
     <button @click="handleClick('replace')">替换到child</button>
@@ -29,7 +29,8 @@ export default {
   },
   data() {
     return {
-      url: ''
+      url: '',
+      fontColor: ''
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -66,6 +67,7 @@ export default {
       getUserInfo({ userId: 21 }).then(res => {
         console.log('res', res.data)
         this.url = res.data.img
+        this.fontColor = res.data.color
       })
     }
   }
