@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/img/logo.png">
+    <img alt="Vue logo" src="../assets/img/logo.png"><br/>
+    <img :src="url">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <p>{{ food }}</p>
     <button @click="handleClick('back')">返回上一页</button>
@@ -24,6 +25,11 @@ export default {
     food: {
       type: String,
       default: 'apple'
+    }
+  },
+  data() {
+    return {
+      url: ''
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -59,6 +65,7 @@ export default {
     getUserInfo () {
       getUserInfo({ userId: 21 }).then(res => {
         console.log('res', res.data)
+        this.url = res.data.img
       })
     }
   }
