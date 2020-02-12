@@ -3,6 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link>
       <router-link v-bind:to="{ name: 'about'}">About</router-link>
+      <router-link v-bind:to="{ name: 'parent'}">parent</router-link>
+      <router-link to="/count-to">count-to</router-link>
     </div>
     <transition-group :name="routerTransition">
       <router-view key="default"/>
