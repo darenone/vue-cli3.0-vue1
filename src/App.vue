@@ -6,6 +6,7 @@
       <router-link v-bind:to="{ name: 'parent' }">parent</router-link>
       <router-link to="/count-to">count-to</router-link>
       <router-link :to="{ name: 'split_pane' }">split-pane</router-link>
+      <router-link :to="{ name: 'render_page' }">render-page</router-link>
     </div>
     <transition-group :name="routerTransition">
       <router-view key="default"/>
@@ -23,7 +24,7 @@ export default {
   },
   watch: {
     '$route' (to) {
-      console.log(to)
+      // console.log(to)
       to.query && to.query.transitionName && (this.routerTransition = to.query.transitionName)
 
     }
