@@ -3,6 +3,7 @@
         <!-- 显示标题的地方 -->
         <div class="a-submenu-title" @click="handleClick">
             <slot name="title"></slot>
+            <span class="shrink-icon" :style="{ transform: `rotateZ(${showChild ? 0 : 180}deg)`}">^</span>
         </div>
         <div v-show="showChild" class="a-submenu-child-box">
             <slot></slot>
@@ -29,6 +30,12 @@ export default {
     &-title {
         background: gray;
         user-select: none;
+        position: relative;
+        .shrink-icon {
+          position: absolute;
+          top: 4px;
+          right: 10px;
+        }
     }
     &-child-box {
         overflow: hidden;
