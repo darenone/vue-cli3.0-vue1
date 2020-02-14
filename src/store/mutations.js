@@ -9,6 +9,9 @@ const mutations = {
   },
   SET_STATE_VALUE (state, params) {
     state.stateValue = params
+  },
+  SET_CURRENT_NAV: (state, params) => {
+    return state.currentNav = params
   }
 }
 export default mutations

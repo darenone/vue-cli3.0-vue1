@@ -12,7 +12,10 @@ export default {
 .a-menu {
     & * {
         list-style: none;
+        cursor: pointer;
+        color: #515a6e;
     }
+    width: 210px;
     ul {
         padding: 0;
         margin: 0;

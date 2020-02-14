@@ -28,9 +28,13 @@ export default {
 <style lang="less">
 .a-submenu {
     &-title {
-        background: gray;
+        // background: gray;
         user-select: none;
         position: relative;
+        padding: 14px 24px;
+        &:hover {
+            color: #2d8cf0;
+        }
         .shrink-icon {
           position: absolute;
           top: 4px;
@@ -39,6 +43,7 @@ export default {
     }
     &-child-box {
         overflow: hidden;
+        padding-left: 20px;
     }
  }
 </style>
