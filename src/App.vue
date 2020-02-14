@@ -7,6 +7,7 @@
       <router-link to="/count-to">count-to</router-link>
       <router-link :to="{ name: 'split_pane' }">split-pane</router-link>
       <router-link :to="{ name: 'render_page' }">render-page</router-link>
+      <router-link :to="{ name: 'baidu_map' }">baidu-map</router-link>
     </div>
     <transition-group :name="routerTransition">
       <router-view key="default"/>
@@ -54,7 +55,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  // text-align: center;
   color: #2c3e50;
 }
 

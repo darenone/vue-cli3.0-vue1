@@ -102,6 +102,11 @@ export default [
     component: () => import('@/views/menu-page.vue')
   },
   {
+    path: '/baidu-map',
+    name: 'baidu_map',
+    component: () => import('@/views/baidu-map.vue')
+  },
+  {
     path: '*',
     component: () => import('@/views/error_404.vue')
   }
