@@ -46,6 +46,8 @@ export default {
                   title: '333-3-1'
                 },{
                   title: '333-3-2'
+                },{
+                  title1: '333-3-3'
                 }
               ]
             }
@@ -58,15 +60,21 @@ export default {
   methods: {
     loopFun(list) {
       let arr = []
-      list.forEach(element => {
-        if (element.title) {
-          if (element.children) {
-            this.loopFun(element.children)
+      list.forEach(e => {
+        if (e.title) {
+          if (e.children) {
+            let children = this.loopFun(e.children)
+            arr.push({
+              path: '',
+              name: e.title,
+              children: children
+            })
+          } else {
+            arr.push({
+              path: '',
+              name: e.title
+            })
           }
-          arr.push({
-            path: '',
-            name: element.title
-          })
         }
       })
       return arr;
@@ -89,8 +97,8 @@ export default {
   },
   mounted () {
     // console.log(this.$router.options.routes)
-    let arr = this.loopFun(this.list)
-    console.log(arr)
+    let arr10 = []
+    console.log(this.loopFun(this.list))
     this.$router.options.rout
   },
   watch: {
