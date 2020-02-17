@@ -1,33 +1,102 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link v-bind:to="{ name: 'about' }">About</router-link>
-      <router-link v-bind:to="{ name: 'parent' }">parent</router-link>
-      <router-link to="/count-to">count-to</router-link>
-      <router-link :to="{ name: 'split_pane' }">split-pane</router-link>
-      <router-link :to="{ name: 'render_page' }">render-page</router-link>
-      <router-link :to="{ name: 'baidu_map' }">baidu-map</router-link>
+    <div class="content">
+      <div class="content-left">
+         <div id="nav">
+          <router-link to="/">Home</router-link>
+          <router-link v-bind:to="{ name: 'about' }">About</router-link>
+          <router-link v-bind:to="{ name: 'parent' }">parent</router-link>
+          <router-link to="/count-to">count-to</router-link>
+          <router-link :to="{ name: 'split_pane' }">split-pane</router-link>
+          <router-link :to="{ name: 'render_page' }">render-page</router-link>
+          <router-link :to="{ name: 'baidu_map' }">baidu-map</router-link>
+        </div>
+      </div>
+      <div class="content-right">
+        <transition-group :name="routerTransition">
+          <router-view key="default"/>
+          <router-view key="email" name="email"/>
+          <router-view key="tel" name="tel"/>
+        </transition-group>
+      </div>
     </div>
-    <transition-group :name="routerTransition">
-      <router-view key="default"/>
-      <router-view key="email" name="email"/>
-      <router-view key="tel" name="tel"/>
-    </transition-group>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      routerTransition: ''
+      routerTransition: '',
+      list: [
+        {
+          title: '111'
+        },{
+          title: '222'
+        },{
+          title: '333',
+          children: [
+            {
+              title: '333-1'
+            },{
+              title: '333-2'
+            },{
+              title: '333-3',
+              children: [
+                {
+                  title: '333-3-1'
+                },{
+                  title: '333-3-2'
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      routerList: []
     }
+  },
+  methods: {
+    loopFun(list) {
+      let arr = []
+      list.forEach(element => {
+        if (element.title) {
+          if (element.children) {
+            this.loopFun(element.children)
+          }
+          arr.push({
+            path: '',
+            name: element.title
+          })
+        }
+      })
+      return arr;
+    },
+    handleRouter (list) {
+      let arr = []
+      list.forEach(element => {
+        if (element.title) {
+          if (!element.children) {
+            arr.push({
+              path: '',
+              name: element.title
+            })
+          } else {
+            console.log(this.loopFun(element.children))
+          }
+        }
+      })
+    }
+  },
+  mounted () {
+    // console.log(this.$router.options.routes)
+    let arr = this.loopFun(this.list)
+    console.log(arr)
+    this.$router.options.rout
   },
   watch: {
     '$route' (to) {
       // console.log(to)
       to.query && to.query.transitionName && (this.routerTransition = to.query.transitionName)
-
     }
   }
 }
@@ -57,11 +126,27 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
   color: #2c3e50;
+  height: 100%;
+  .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    &-left {
+      width: 200px;
+      height: 100%;
+      background: #42b983;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+    &-right {
+      flex: 1;
+      background: palegoldenrod;
+    }
+  }
 }
 
 #nav {
   padding: 30px;
-    
   a {
     font-weight: bold;
     color: #2c3e50;

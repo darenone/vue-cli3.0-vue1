@@ -49,15 +49,6 @@ export default {
 .a-menu-item-active {
     background: #f0faff;
     color: #2d8cf0;
-    &::after {
-        content: "";
-        display: block;
-        width: 2px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        background: #2d8cf0;
-    }
+    border-right: 2px solid #2d8cf0;
 }
 </style>
