@@ -5,6 +5,7 @@ import store from './store'
 import Bus from './bus/index'
 import Mock from './mock/index'
 import CountTo from '_c/count-to'
+import 'font-awesome/css/font-awesome.css'
 if (process.env.NODE_ENV !== 'production') require('./mock')
 Vue.config.productionTip = false
 Vue.prototype.$bus = Bus

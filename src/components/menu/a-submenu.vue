@@ -2,8 +2,10 @@
     <ul class="a-submenu">
         <!-- 显示标题的地方 -->
         <div class="a-submenu-title" @click="handleClick">
-            <slot name="title"></slot>
-            <span class="shrink-icon" :style="{ transform: `rotateZ(${showChild ? 0 : 180}deg)`}">^</span>
+            <slot name="title">
+            </slot>
+            <i class="shrink-icon" :class="showChild ? 'fa fa-caret-down' : 'fa fa-caret-right'"></i>
+            <!-- <span class="shrink-icon" :style="{ transform: `rotateZ(${showChild ? 0 : 180}deg)`}">^</span> -->
         </div>
         <div v-show="showChild" class="a-submenu-child-box">
             <slot></slot>
@@ -11,6 +13,8 @@
     </ul>
 </template>
 <script>
+// import transition from '_c/transiton'
+// const { CollapseTransition } = transition
 export default {
     name: 'ASubmenu',
     data () {
@@ -31,7 +35,7 @@ export default {
         // background: gray;
         user-select: none;
         position: relative;
-        padding: 14px 24px;
+        padding: 14px 0;
         &:hover {
             color: #2d8cf0;
         }
@@ -43,7 +47,7 @@ export default {
     }
     &-child-box {
         overflow: hidden;
-        padding-left: 20px;
+        // padding-left: 20px;
     }
  }
 </style>

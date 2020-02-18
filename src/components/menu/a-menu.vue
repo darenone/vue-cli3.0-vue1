@@ -15,7 +15,7 @@ export default {
         cursor: pointer;
         color: #515a6e;
     }
-    width: 210px;
+    width: 200px;
     ul {
         padding: 0;
         margin: 0;

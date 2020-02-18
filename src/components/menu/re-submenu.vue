@@ -1,8 +1,11 @@
 <template>
     <a-sub-menu>
-        <div slot="title">{{ parent.title }}</div>
+        <div slot="title" :style="{'padding-left': `${parent.level * 20}px`}">
+            <i :class="parent.icon" style="padding-right: 5px;"></i>
+            {{ parent.name }}
+        </div>
         <template v-for="(item, i) in parent.children">
-            <a-menu-item v-if="!item.children" :key="`menu_item_${index}_${i}`" :uId="`menu_${item.title}_${i}`">{{ item.title }}</a-menu-item>
+            <a-menu-item v-if="!item.children" :key="`menu_item_${index}_${i}`" :uId="`menu_${item.name}_${i}`" :icon="item.icon" :path="item.path" :style="{'padding-left': `${item.level * 20}px`}">{{ item.name }}</a-menu-item>
             <re-submenu v-else :key="`menu_item_${index}_${i}`" :parent="item" :index="i"></re-submenu>
         </template>
     </a-sub-menu>
@@ -27,6 +30,6 @@ export default {
             type: Number,
             default: 0
         }
-    }
+    },
 }
 </script>
