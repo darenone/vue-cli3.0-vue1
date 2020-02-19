@@ -12,8 +12,9 @@ export default [
     },
     meta: {
       level: 1,
-      icon: 'fa fa-home',
-      title: '首页'
+      icon: 'home',
+      title: '首页',
+      path: '/'
     },
     beforeEnter: (to, from, next) => {
       if (from.name === 'login') console.log('这是从登录页来的')
@@ -33,8 +34,9 @@ export default [
     },
     meta: {
       level: 1,
-      icon: 'fa fa-info-circle',
-      title: '关于'
+      icon: 'info-circle',
+      title: '关于',
+      path: '/about'
     },
   },
   {
@@ -42,8 +44,9 @@ export default [
     name: 'login',
     meta: {
       level: 1,
-      icon: 'fa fa-sign-in',
-      title: '登录页'
+      icon: 'sign-in-alt',
+      title: '登录页',
+      path: '/login'
     },
     component: () => import('@/views/login.vue')
   },
@@ -52,8 +55,9 @@ export default [
     name: 'argu',
     meta: {
       level: 1,
-      icon: 'fa fa-get-pocket',
-      title: '动态路由'
+      icon: 'info-circle',
+      title: '动态路由',
+      path: '/argu/:name'
     },
     component: () => import('@/views/argu.vue'),
     props: true
@@ -63,8 +67,9 @@ export default [
     name: 'parent',
     meta: {
       level: 1,
-      icon: 'fa fa-level-down',
-      title: '一级路由'
+      icon: 'level-down-alt',
+      title: '一级路由',
+      path: '/parent'
     },
     component: () => import('@/views/parent.vue'),
     children: [
@@ -73,8 +78,9 @@ export default [
         name: 'child',
         meta: {
           level: 2,
-          icon: 'fa fa-level-down',
-          title: '二级路由'
+          icon: 'level-down-alt',
+          title: '二级路由',
+          path: '/parent/child'
         },
         component: () => import('@/views/child.vue'),
         children: [
@@ -83,12 +89,33 @@ export default [
             name: 'grandson',
             meta: {
               level: 3,
-              icon: 'fa fa-level-down',
-              title: '三级路由'
+              icon: 'level-down-alt',
+              title: '三级路由',
+              path: '/parent/child/grandson'
+            },
+            component: () => import('@/views/grandson.vue')
+          },{
+            path: 'grandson',
+            name: 'grandson',
+            meta: {
+              level: 3,
+              icon: 'level-down-alt',
+              title: '三级路由',
+              path: '/parent/child/grandson'
             },
             component: () => import('@/views/grandson.vue')
           }
         ]
+      },{
+        path: 'child',
+        name: 'child',
+        meta: {
+          level: 2,
+          icon: 'level-down-alt',
+          title: '二级路由',
+          path: '/parent/child'
+        },
+        component: () => import('@/views/child.vue'),
       }
     ]
   },
@@ -96,8 +123,9 @@ export default [
     path: '/named_view',
     meta: {
       level: 1,
-      icon: 'fa fa-street-view',
-      title: '命名视图'
+      icon: 'street-view',
+      title: '命名视图',
+      path: '/named_view'
     },
     components: {
       default: () => import('@/views/parent.vue'),
@@ -109,8 +137,9 @@ export default [
     path: '/main',
     meta: {
       level: 1,
-      icon: 'fa fa-arrow-right',
-      title: '重定向'
+      icon: 'arrow-right',
+      title: '重定向',
+      path: '/main'
     },
     redirect: to => {
       return {
@@ -123,8 +152,9 @@ export default [
     name: 'store',
     meta: {
       level: 1,
-      icon: 'fa fa-comments',
-      title: 'vuex使用'
+      icon: 'comments',
+      title: 'vuex使用',
+      path: '/store'
     },
     component: () => import('@/views/store.vue')
   },
@@ -133,8 +163,9 @@ export default [
     name: 'count_to',
     meta: {
       level: 1,
-      icon: 'fa fa-calculator',
-      title: 'countTo组件'
+      icon: '',
+      title: 'countTo组件',
+      path: '/count-to'
     },
     component: () => import('@/views/count-to.vue')
   },
@@ -143,8 +174,9 @@ export default [
     name: 'split_pane',
     meta: {
       level: 1,
-      icon: 'fa fa-window-maximize',
-      title: 'splitPane组件'
+      icon: '',
+      title: 'splitPane组件',
+      path: '/split-pane'
     },
     component: () => import('@/views/split-pane.vue')
   },
@@ -153,8 +185,9 @@ export default [
     name: 'render_page',
     meta: {
       level: 1,
-      icon: 'fa fa-pagelines',
-      title: 'render渲染函数'
+      icon: '',
+      title: 'render渲染函数',
+      path: '/render-page'
     },
     component: () => import('@/views/render-page.vue')
   },
@@ -163,8 +196,9 @@ export default [
     name: 'menu_page',
     meta: {
       level: 1,
-      icon: 'fa fa-list-ul',
-      title: 'menu组件'
+      icon: '',
+      title: 'menu组件',
+      path: '/menu-page'
     },
     component: () => import('@/views/menu-page.vue')
   },
@@ -173,10 +207,22 @@ export default [
     name: 'baidu_map',
     meta: {
       level: 1,
-      icon: 'fa fa-map',
-      title: '百度地图'
+      icon: '',
+      title: '百度地图',
+      path: '/baidu-map'
     },
     component: () => import('@/views/baidu-map.vue')
+  },
+  {
+    path: '/iview-menu',
+    name: 'iview_menu',
+    meta: {
+      level: 1,
+      icon: '',
+      title: 'iview Menu',
+      path: '/iview-menu'
+    },
+    component: () => import('@/views/iview-menu.vue')
   },
   {
     path: '*',

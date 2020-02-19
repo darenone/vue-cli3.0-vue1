@@ -5,10 +5,25 @@ import store from './store'
 import Bus from './bus/index'
 import Mock from './mock/index'
 import CountTo from '_c/count-to'
-import 'font-awesome/css/font-awesome.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+Vue.use(iView)
+
+library.add(fas, far, fab)
+
 if (process.env.NODE_ENV !== 'production') require('./mock')
 Vue.config.productionTip = false
 Vue.prototype.$bus = Bus
+
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-layers', FontAwesomeLayers)
+Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
 const handleClick = (event) => {
   console.log(event)

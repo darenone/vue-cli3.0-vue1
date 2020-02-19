@@ -3,13 +3,6 @@
     <div class="content">
       <div class="content-left">
          <div id="nav">
-          <!-- <router-link to="/">Home</router-link>
-          <router-link v-bind:to="{ name: 'about' }">About</router-link>
-          <router-link v-bind:to="{ name: 'parent' }">parent</router-link>
-          <router-link to="/count-to">count-to</router-link>
-          <router-link :to="{ name: 'split_pane' }">split-pane</router-link>
-          <router-link :to="{ name: 'render_page' }">render-page</router-link>
-          <router-link :to="{ name: 'baidu_map' }">baidu-map</router-link> -->
           <a-menu>
             <template v-for="(item, index) in menuList">
               <a-menu-item v-if="!item.children" :key="`menu_item_${index}`" :uId="`menu_${item.name}_${index}`" :icon="item.icon" :path="item.path" :style="{'padding-left': `${item.level * 20}px`}">{{ item.name }}</a-menu-item>
@@ -84,38 +77,27 @@ export default {
     }
   },
   methods: {
-    loopFun(list, index, path) {
+    loopFun(list, index) {
       let arr = []
       index++
       list.forEach(e => {
         if (e.name) {
           if (e.children) {
-            console.log(e.path)
-            // path += e.path
-            let children = this.loopFun(e.children, index, (path + `/${e.path}`))
+            let children = this.loopFun(e.children, index)
             arr.push({
-              path: path + `/${e.path}`,
+              path: e.meta.path,
               name: e.meta.title,
               children: children,
               icon: e.meta.icon,
               level: index
             })
           } else {
-            if (path) {
-              arr.push({
-                path: path + `/${e.path}`,
-                name: e.meta.title,
-                icon: e.meta.icon,
-                level: index
-              })
-            } else {
-              arr.push({
-                path: e.path,
-                name: e.meta.title,
-                icon: e.meta.icon,
-                level: index
-              })
-            }
+            arr.push({
+              path: e.meta.path,
+              name: e.meta.title,
+              icon: e.meta.icon,
+              level: index
+            })
           }
         }
       })
@@ -125,8 +107,8 @@ export default {
   mounted () {
     this.routerList = this.$router.options.routes
     // console.log(this.routerList)
-    this.menuList = this.loopFun(this.routerList, 0, '')
-    console.log(this.menuList)
+    this.menuList = this.loopFun(this.routerList, 0)
+    // console.log(this.menuList)
   },
   watch: {
     '$route' (to) {

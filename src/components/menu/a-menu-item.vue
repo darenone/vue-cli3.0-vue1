@@ -1,10 +1,11 @@
 <template>
-    <li class="a-menu-item" @click="handleClick(uId)" :class="{ 'a-menu-item-active': currentNav == uId }">
-        <router-link :to="path">
-            <i :class="icon" style="padding-right: 5px;"></i>
+    <router-link :to="path" style="text-decoration: none;display: block;padding-left: 10px;">
+        <li class="a-menu-item" @click="handleClick(uId)" :class="{ 'a-menu-item-active': currentNav == uId }">
+            <!-- <i :class="icon" style="padding-right: 5px;"></i> -->
+            <font-awesome-icon v-if="icon" :icon="['fas', icon]"></font-awesome-icon>
             <slot></slot>
-        </router-link>
-    </li>
+        </li>
+    </router-link>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
