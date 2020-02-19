@@ -1,9 +1,14 @@
 <template>
-    <Menu active-name="1-2" :open-names="['1']">
-        <MenuItem name="2">
-            <Icon type="ios-people" />
-            用户管理
-        </MenuItem>
+    <div class="nav">
+        <div class="nav-left">
+            <Menu>
+                <template v-for="(item, index) in list">
+                    <i-menu-item v-if="!item.children" :key="`menu_item_${index}`" :name="item.title">{{item.title}}</i-menu-item>
+                    <!-- <i-re-submenu v-else :key="`menu_item_${index}`" :parent="item"></i-re-submenu> -->
+                </template>
+            </Menu>
+        </div>
+        <Menu active-name="1-4" :open-names="['1']">
         <Submenu name="1">
             <template slot="title">
                 <Icon type="ios-analytics" />
@@ -31,6 +36,10 @@
                 <MenuItem name="3-2">Option 8</MenuItem>
             </Submenu>
         </Submenu>
+        <MenuItem name="3">
+            <Icon type="ios-people" />
+            用户管理
+        </MenuItem>
         <Submenu name="4">
             <template slot="title">
                 <Icon type="ios-cog" />
@@ -41,13 +50,61 @@
             <MenuItem name="4-3">Option 11</MenuItem>
             <MenuItem name="4-4">Option 12</MenuItem>
         </Submenu>
+         <MenuItem name="5">
+            <Icon type="ios-people" />
+            基本信息
+        </MenuItem>
     </Menu>
+    </div>
 </template>
 <script>
+import menuComponents from '_c/iview-menu'
+const { IMenuItem } = menuComponents
 export default {
+    components: {
+        IMenuItem,
+    },
     data () {
         return {
-            theme1: 'light'
+            theme1: 'dark',
+            list: [
+                {
+                    title: '111',
+                },{
+                    title: '222',
+                },{
+                    title: '333',
+                    children: [
+                        {
+                            title: '333-1',
+                        },{
+                            title: '333-2',
+                        },{
+                            title: '333-3',
+                            children: [
+                                {
+                                    title: '333-3-1',
+                                },{
+                                    title: '333-3-2',
+                                },{
+                                    title1: '333-3-3',
+                                }
+                            ]
+                        }
+                    ]
+                },{
+                    title: '444',
+                    children: [
+                        {
+                            title: '444-1',
+                        },{
+                            title: '444-2',
+                        },{
+                            title: '444-3',
+                        }
+                    ]
+                }
+            ],
         }
     }
 }

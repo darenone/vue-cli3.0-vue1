@@ -38,42 +38,43 @@ export default {
       list: [
         {
           title: '111',
-          index: 1
         },{
           title: '222',
-          index: 1
         },{
           title: '333',
-          index: 1,
           children: [
             {
               title: '333-1',
-              index: 2
             },{
               title: '333-2',
-              index: 2
             },{
               title: '333-3',
-              index: 2,
               children: [
                 {
                   title: '333-3-1',
-                  index: 3
                 },{
                   title: '333-3-2',
-                  index: 3
                 },{
                   title1: '333-3-3',
-                  index: 3
                 }
               ]
             }
           ]
+        },{
+          title: '444',
+          children: [
+            {
+              title: '444-1',
+            },{
+              title: '444-2',
+            },{
+              title: '444-3',
+            }
+          ]
         }
       ],
-      menuList: [],
-      menuIndex: 1,
-      routerList: []
+      menuList: [], // 导航列表
+      routerList: [] // 路由列表
     }
   },
   methods: {
