@@ -4,7 +4,7 @@
             <Menu>
                 <template v-for="(item, index) in list">
                     <i-menu-item v-if="!item.children" :key="`menu_item_${index}`" :name="item.title">{{item.title}}</i-menu-item>
-                    <!-- <i-re-submenu v-else :key="`menu_item_${index}`" :parent="item"></i-re-submenu> -->
+                    <i-re-submenu v-else :key="`menu_item_${index}`" :parent1="item"></i-re-submenu>
                 </template>
             </Menu>
         </div>
@@ -58,11 +58,13 @@
     </div>
 </template>
 <script>
-import menuComponents from '_c/iview-menu'
-const { IMenuItem } = menuComponents
+import menuComponent from '_c/iview-menu'
+const { IMenuItem } = menuComponent
+import IReSubmenu from '_c/iview-menu/i-re-submenu.vue'
 export default {
     components: {
         IMenuItem,
+        IReSubmenu
     },
     data () {
         return {

@@ -5,7 +5,6 @@
     </Submenu>
 </template>
 <script>
-
 export default {
     props: {
         name: {
