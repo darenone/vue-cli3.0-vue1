@@ -94,28 +94,8 @@ export default [
               path: '/parent/child/grandson'
             },
             component: () => import('@/views/grandson.vue')
-          },{
-            path: 'grandson',
-            name: 'grandson',
-            meta: {
-              level: 3,
-              icon: 'level-down-alt',
-              title: '三级路由',
-              path: '/parent/child/grandson'
-            },
-            component: () => import('@/views/grandson.vue')
           }
         ]
-      },{
-        path: 'child',
-        name: 'child',
-        meta: {
-          level: 2,
-          icon: 'level-down-alt',
-          title: '二级路由',
-          path: '/parent/child'
-        },
-        component: () => import('@/views/child.vue'),
       }
     ]
   },

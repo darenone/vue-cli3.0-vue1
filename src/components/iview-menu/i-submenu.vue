@@ -1,6 +1,8 @@
 <template>
     <Submenu :name="name">
-        <slot name="title"></slot>
+        <template slot="title">
+            <slot name="title"></slot>
+        </template>
         <slot></slot>
     </Submenu>
 </template>

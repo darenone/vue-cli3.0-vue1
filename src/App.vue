@@ -3,12 +3,18 @@
     <div class="content">
       <div class="content-left">
          <div id="nav">
-          <a-menu>
+          <!-- <a-menu>
             <template v-for="(item, index) in menuList">
               <a-menu-item v-if="!item.children" :key="`menu_item_${index}`" :uId="`menu_${item.name}_${index}`" :icon="item.icon" :path="item.path" :style="{'padding-left': `${item.level * 20}px`}">{{ item.name }}</a-menu-item>
               <re-submenu v-else :key="`menu_item_${index}`" :parent="item"></re-submenu>
             </template>
-          </a-menu>
+          </a-menu> -->
+          <Menu :accordion="true">
+              <template v-for="(item, index) in menuList">
+                  <i-menu-item v-if="!item.children" :key="`menu_item_${index}`" :name="item.name" :path="item.path">{{item.name}}</i-menu-item>
+                  <i-re-submenu v-else :key="`menu_item_${index}`" :parent="item"></i-re-submenu>
+              </template>
+          </Menu>
         </div>
       </div>
       <div class="content-right">
@@ -25,12 +31,17 @@
 import menuComponents from "_c/menu"
 import ReSubmenu from '_c/menu/re-submenu.vue'
 const { AMenu, AMenuItem, ASubMenu } = menuComponents
+import iMenuComponents from '_c/iview-menu'
+const { IMenuItem } = iMenuComponents
+import IReSubmenu from '_c/iview-menu/i-resubmenu.vue'
 export default {
   components: {
     AMenu,
     AMenuItem,
     ASubMenu,
-    ReSubmenu
+    ReSubmenu,
+    IMenuItem,
+    IReSubmenu
   },
   data() {
     return {
@@ -109,7 +120,7 @@ export default {
     this.routerList = this.$router.options.routes
     // console.log(this.routerList)
     this.menuList = this.loopFun(this.routerList, 0)
-    // console.log(this.menuList)
+    console.log(this.menuList)
   },
   watch: {
     '$route' (to) {
@@ -150,7 +161,7 @@ export default {
     height: 100%;
     display: flex;
     &-left {
-      width: 200px;
+      width: 210px;
       height: 100%;
       // background: #42b983;
       overflow: hidden;
@@ -165,12 +176,15 @@ export default {
 
 #nav {
   a {
-    font-weight: bold;
-    color: #2c3e50;
+    // font-weight: bold;
+    // color: #2c3e50;
 
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+  .ivu-menu {
+    width: 100%!important;
   }
 }
 </style>
