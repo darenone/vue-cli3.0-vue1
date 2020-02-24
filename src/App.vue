@@ -1,14 +1,11 @@
 <template>
   <div id="app">
-    <div class="content">
+    <router-view key="default"/>
+    <router-view key="email" name="email"/>
+    <router-view key="tel" name="tel"/>
+    <!-- <div class="content">
       <div class="content-left">
          <div id="nav">
-          <!-- <a-menu>
-            <template v-for="(item, index) in menuList">
-              <a-menu-item v-if="!item.children" :key="`menu_item_${index}`" :uId="`menu_${item.name}_${index}`" :icon="item.icon" :path="item.path" :style="{'padding-left': `${item.level * 20}px`}">{{ item.name }}</a-menu-item>
-              <re-submenu v-else :key="`menu_item_${index}`" :parent="item"></re-submenu>
-            </template>
-          </a-menu> -->
           <Menu :accordion="true">
               <template v-for="(item, index) in menuList">
                   <i-menu-item v-if="!item.children" :key="`menu_item_${index}`" :name="item.name" :path="item.path">{{item.name}}</i-menu-item>
@@ -24,7 +21,7 @@
           <router-view key="tel" name="tel"/>
         </transition>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

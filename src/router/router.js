@@ -1,10 +1,11 @@
 import Home from '@/views/Home.vue'
+import Layout from '@/views/layout.vue'
 export default [
   {
     path: '/',
     alias: '/home_page',
     name: 'home',
-    component: Home,
+    component: Layout,
     props: route => {
       return {
         food: route.query.food
@@ -20,7 +21,13 @@ export default [
       if (from.name === 'login') console.log('这是从登录页来的')
       else console.log('这不是从登录页来的')
       next()
-    }
+    },
+    children: [
+      {
+        path: 'home',
+        component: () => import('@/views/Home.vue')
+      }
+    ]
   },
   {
     path: '/about',
