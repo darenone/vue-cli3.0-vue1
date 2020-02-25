@@ -25,7 +25,10 @@
                 </Menu>
             </Header>
             <Layout>
-                <Sider hide-trigger collapsible v-model="collapsed" breakpoint="sm" :style="{background: 'palegoldenrod'}">Sider</Sider>
+                <Sider hide-trigger collapsible v-model="collapsed" breakpoint="sm" :style="{background: 'palegoldenrod'}">
+                    <!-- 放置侧边栏导航菜单 -->
+                    <side-menu :collapsed="collapsed" :list="list"></side-menu>
+                </Sider>
                 <Layout :style="{padding: '0 10px'}">
                     <Icon type="md-menu" :size="32" :class="triggerClass" @click.native="handleCollapsed"></Icon>
                     <Breadcrumb :style="{margin: '24px 0'}">
@@ -45,10 +48,52 @@
     </div>
 </template>
 <script>
+import SideMenu from '_c/side-menu'
 export default {
+    components: {
+        SideMenu
+    },
     data () {
         return {
-            collapsed: false
+            collapsed: false,
+            list: [
+                {
+                    title: '111',
+                },{
+                    title: '222',
+                },{
+                    title: '333',
+                    children: [
+                        {
+                        title: '333-1',
+                        },{
+                        title: '333-2',
+                        },{
+                        title: '333-3',
+                        children: [
+                            {
+                            title: '333-3-1',
+                            },{
+                            title: '333-3-2',
+                            },{
+                            title: '333-3-3',
+                            }
+                        ]
+                        }
+                    ]
+                },{
+                    title: '444',
+                    children: [
+                        {
+                        title: '444-1',
+                        },{
+                        title: '444-2',
+                        },{
+                        title: '444-3',
+                        }
+                    ]
+                }
+            ],
         }
     },
     computed: {
