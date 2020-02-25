@@ -8,12 +8,12 @@
                 <!-- 如果item有children -->
                 <!-- <Submenu v-if="item.children" :key="index" :name="item.title"></Submenu> -->
                 <side-menu-submenu
-                v-if="item.children"
+                v-if="item.children && item.children.length"
                 :key="index"
                 :name="item.title"
                 :parent="item"></side-menu-submenu>
                 <!-- 如果item没有children -->
-                <MenuItem v-else :key="index" :name="item.title">
+                <MenuItem v-else :key="index" :name="item.title" :to="item.path">
                     <Icon type="ios-stats" />
                     {{ item.title }}
                 </MenuItem>
@@ -22,7 +22,7 @@
         <!-- icon收缩显示dropdown菜单 -->
         <div v-else class="dropdown-wrapper">
             <template v-for="(item, index) in list">
-                <side-menu-dropdown v-if="item.children" @on-select="handleSelect" :showTitle="false" :key="index" :parent="item"></side-menu-dropdown>
+                <side-menu-dropdown v-if="item.children && item.children.length" @on-select="handleSelect" :showTitle="false" :key="index" :parent="item"></side-menu-dropdown>
                 <Tooltip v-else transfer :content="item.title" placement="right" :key="index">
                     <a class="drop-menu-a" @click="handleClick(item.title)">
                         <Icon type="ios-stats" size="20"/>

@@ -6,7 +6,7 @@
         </a>
         <DropdownMenu slot="list">
             <template v-for="(item, index) in parent.children">
-                <side-menu-dropdown v-if="item.children" :key="index" :parent="item"></side-menu-dropdown>
+                <side-menu-dropdown v-if="item.children && item.children.length" :key="index" :parent="item"></side-menu-dropdown>
                 <DropdownItem v-else :key="index" :name="item.title">
                     <Icon type="ios-stats" size="20"/>
                     {{ item.title }}
@@ -45,8 +45,8 @@ export default {
     },
     methods: {
         handleClick (name) {
-            // 不是第一级的时候触发
-            if (!this.showTitle) this.$emit('on-select', name)
+            // 是否是第一级路由
+            if (!this.showTitle) this.$emit('on-select',)
         }
     }
 }

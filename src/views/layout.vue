@@ -24,10 +24,10 @@
                     </div>
                 </Menu>
             </Header>
-            <Layout>
-                <Sider hide-trigger collapsible v-model="collapsed" breakpoint="sm" :style="{background: 'palegoldenrod'}">
+            <Layout style="overflow: hidden;">
+                <Sider hide-trigger collapsible v-model="collapsed" breakpoint="sm" class="sider-wrapper">
                     <!-- 放置侧边栏导航菜单 -->
-                    <side-menu :collapsed="collapsed" :list="list"></side-menu>
+                    <side-menu :collapsed="collapsed" :list="menuList"></side-menu>
                 </Sider>
                 <Layout :style="{padding: '0 10px'}">
                     <Icon type="md-menu" :size="32" :class="triggerClass" @click.native="handleCollapsed"></Icon>
@@ -94,6 +94,8 @@ export default {
                     ]
                 }
             ],
+            menuList: [], // 导航列表
+            routerList: [] // 路由列表
         }
     },
     computed: {
@@ -107,13 +109,48 @@ export default {
     methods: {
         handleCollapsed () {
             this.collapsed = !this.collapsed
-        }
+        },
+        loopFun(list, index) {
+        let arr = []
+        index++
+        list.forEach(e => {
+            if (e.name) {
+                if (e.children) {
+                    let children = this.loopFun(e.children, index)
+                    arr.push({
+                    path: e.meta.path,
+                    title: e.meta.title,
+                    children: children,
+                    icon: e.meta.icon,
+                    level: index
+                    })
+                } else {
+                    arr.push({
+                    path: e.meta.path,
+                    title: e.meta.title,
+                    icon: e.meta.icon,
+                    level: index
+                    })
+                }
+            }
+        })
+        return arr;
+        },
+    },
+    mounted () {
+        this.routerList = this.$router.options.routes
+        this.menuList = this.loopFun(this.routerList, 0)
+        console.log(this.menuList)
     }
 }
 </script>
 <style lang="less">
 .layout-wrapper {
     height: 100%;
+    .sider-wrapper {
+        background: palegoldenrod;
+        overflow-y: auto;
+    }
 }
 .layout-outer {
     height: 100%;

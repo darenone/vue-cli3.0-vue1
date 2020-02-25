@@ -26,7 +26,7 @@ export default [
       {
         path: 'home',
         component: () => import('@/views/Home.vue')
-      }
+      },
     ]
   },
   {
@@ -35,7 +35,7 @@ export default [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+    component: Layout,
     props: {
       food: 'orange'
     },
@@ -45,6 +45,13 @@ export default [
       title: '关于',
       path: '/about'
     },
+    redirect: '/about/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+      },
+    ]
   },
   {
     path: '/login',
