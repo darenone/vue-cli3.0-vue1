@@ -4,7 +4,7 @@ export default [
   {
     path: '/',
     alias: '/home_page',
-    name: 'home',
+    // name: 'home',
     component: Layout,
     props: route => {
       return {
@@ -14,6 +14,7 @@ export default [
     meta: {
       level: 1,
       icon: 'home',
+      name: 'home',
       title: '首页',
       path: '/'
     },
@@ -24,14 +25,14 @@ export default [
     },
     children: [
       {
-        path: 'home',
+        path: '',
         component: () => import('@/views/Home.vue')
       },
     ]
   },
   {
     path: '/about',
-    name: 'about',
+    // name: 'about-page',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -42,13 +43,14 @@ export default [
     meta: {
       level: 1,
       icon: 'info-circle',
+      name: 'about',
       title: '关于',
       path: '/about'
     },
-    redirect: '/about/index',
+    // redirect: '/about/index',
     children: [
       {
-        path: 'index',
+        path: '/',
         component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
       },
     ]
@@ -65,158 +67,277 @@ export default [
     component: () => import('@/views/login.vue')
   },
   {
-    path: '/argu/:name',
-    name: 'argu',
+    path: '/argu',
+    // name: 'argu',
     meta: {
       level: 1,
       icon: 'info-circle',
+      name: 'argu',
       title: '动态路由',
-      path: '/argu/:name'
+      path: '/argu'
     },
-    component: () => import('@/views/argu.vue'),
-    props: true
+    component: Layout,
+    props: true,
+    // redirect: '/argu/index',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/argu.vue')
+      },
+    ]
   },
   {
     path: '/parent',
-    name: 'parent',
+    // name: 'parent',
     meta: {
-      level: 1,
-      icon: 'level-down-alt',
-      title: '一级路由',
+      name: 'parent',
+      title: '嵌套路由',
       path: '/parent'
     },
-    component: () => import('@/views/parent.vue'),
+    component: Layout,
     children: [
       {
-        path: 'child',
-        name: 'child',
+        path: '',
+        name: 'parent',
         meta: {
-          level: 2,
-          icon: 'level-down-alt',
-          title: '二级路由',
-          path: '/parent/child'
+          name: 'parent',
+          title: '一级路由',
+          path: '/parent'
         },
-        component: () => import('@/views/child.vue'),
+        component: () => import('@/views/parent.vue'),
         children: [
           {
-            path: 'grandson',
-            name: 'grandson',
+            path: 'child',
+            name: 'child',
             meta: {
-              level: 3,
-              icon: 'level-down-alt',
-              title: '三级路由',
-              path: '/parent/child/grandson'
+              name: 'child',
+              title: '二级路由',
+              path: '/parent/child'
             },
-            component: () => import('@/views/grandson.vue')
+            component: () => import('@/views/child.vue'),
+            children: [
+              {
+                path: 'grandson',
+                name: 'grandson',
+                meta: {
+                  name: 'child',
+                  title: '三级路由',
+                  path: '/parent/child/grandson'
+                },
+                component: () => import('@/views/grandson.vue')
+              }
+            ]
           }
         ]
       }
     ]
   },
+  // {
+  //   path: '/parent',
+  //   name: 'parent',
+  //   meta: {
+  //     level: 1,
+  //     icon: 'level-down-alt',
+  //     title: '一级路由',
+  //     path: '/parent'
+  //   },
+  //   component: () => import('@/views/parent.vue'),
+  //   children: [
+  //     {
+  //       path: 'child',
+  //       name: 'child',
+  //       meta: {
+  //         level: 2,
+  //         icon: 'level-down-alt',
+  //         title: '二级路由',
+  //         path: '/parent/child'
+  //       },
+  //       component: () => import('@/views/child.vue'),
+  //       children: [
+  //         {
+  //           path: 'grandson',
+  //           name: 'grandson',
+  //           meta: {
+  //             level: 3,
+  //             icon: 'level-down-alt',
+  //             title: '三级路由',
+  //             path: '/parent/child/grandson'
+  //           },
+  //           component: () => import('@/views/grandson.vue')
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   {
     path: '/named_view',
+    // name: 'named_view',
     meta: {
       level: 1,
       icon: 'street-view',
+      name: 'named_view',
       title: '命名视图',
       path: '/named_view'
     },
-    components: {
-      default: () => import('@/views/parent.vue'),
-      email: () => import('@/views/email.vue'),
-      tel: () => import('@/views/tel.vue'),
-    }
+    component: Layout,
+    children: [
+      {
+        path: '',
+        components: {
+          default: () => import('@/views/parent.vue'),
+          email: () => import('@/views/email.vue'),
+          tel: () => import('@/views/tel.vue'),
+        }
+      }
+    ]
   },
   {
     path: '/main',
+    // name: 'redirect',
     meta: {
       level: 1,
       icon: 'arrow-right',
+      name: 'redirect',
       title: '重定向',
       path: '/main'
     },
-    redirect: to => {
-      return {
-        name: 'home'
+    component: Layout,
+    children: [
+      {
+        path: '',
+        redirect: to => {
+          return {
+            name: ''
+          }
+        }
       }
-    }
+    ]
   },
   {
     path: '/store',
-    name: 'store',
+    // name: 'store',
     meta: {
       level: 1,
       icon: 'comments',
+      name: 'store',
       title: 'vuex使用',
       path: '/store'
     },
-    component: () => import('@/views/store.vue')
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/store.vue')
+      }
+    ]
   },
   {
     path: '/count-to',
-    name: 'count_to',
+    // name: 'count_to',
     meta: {
       level: 1,
       icon: '',
+      name: 'count_to',
       title: 'countTo组件',
       path: '/count-to'
     },
-    component: () => import('@/views/count-to.vue')
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/count-to.vue')
+      }
+    ]
   },
   {
     path: '/split-pane',
-    name: 'split_pane',
+    // name: 'split_pane',
     meta: {
       level: 1,
       icon: '',
+      name: 'split_pane',
       title: 'splitPane组件',
       path: '/split-pane'
     },
-    component: () => import('@/views/split-pane.vue')
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/split-pane.vue')
+      }
+    ]
   },
   {
     path: '/render-page',
-    name: 'render_page',
+    // name: 'render_page',
     meta: {
       level: 1,
       icon: '',
+      name: 'render_page',
       title: 'render渲染函数',
       path: '/render-page'
     },
-    component: () => import('@/views/render-page.vue')
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/render-page.vue')
+      }
+    ]
   },
   {
     path: '/menu-page',
-    name: 'menu_page',
+    // name: 'menu_page',
     meta: {
       level: 1,
       icon: '',
+      name: 'menu_page',
       title: 'menu组件',
       path: '/menu-page'
     },
-    component: () => import('@/views/menu-page.vue')
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/menu-page.vue')
+      }
+    ]
   },
   {
     path: '/baidu-map',
-    name: 'baidu_map',
+    // name: 'baidu_map',
     meta: {
       level: 1,
       icon: '',
+      name: 'baidu_map',
       title: '百度地图',
       path: '/baidu-map'
     },
-    component: () => import('@/views/baidu-map.vue')
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/baidu-map.vue')
+      }
+    ]
   },
   {
     path: '/iview-menu',
-    name: 'iview_menu',
+    // name: 'iview_menu',
     meta: {
       level: 1,
       icon: '',
+      name: 'iview_menu',
       title: 'iview Menu',
       path: '/iview-menu'
     },
-    component: () => import('@/views/iview-menu.vue')
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/iview-menu.vue')
+      }
+    ]
   },
   {
     path: '*',

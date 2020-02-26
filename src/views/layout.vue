@@ -38,7 +38,9 @@
                     </Breadcrumb>
                     <Content class="content-con">
                         <Card shadow class="page-card">
-                            <router-view/>
+                            <router-view key="default"/>
+                            <router-view key="email" name="email"/>
+                            <router-view key="tel" name="tel"/>
                         </Card>
                     </Content>
                 </Layout>
@@ -114,7 +116,7 @@ export default {
         let arr = []
         index++
         list.forEach(e => {
-            if (e.name) {
+            if (e.meta && e.meta.name) {
                 if (e.children) {
                     let children = this.loopFun(e.children, index)
                     arr.push({
