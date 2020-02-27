@@ -340,6 +340,22 @@ export default [
     ]
   },
   {
+    path: '/echart-map',
+    meta: {
+      name: 'echart_map',
+      title: 'echart地图下钻',
+      path: '/echart-map'
+    },
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/echart-map.vue')
+      }
+
+    ]
+  },
+  {
     path: '*',
     component: () => import('@/views/error_404.vue')
   }
