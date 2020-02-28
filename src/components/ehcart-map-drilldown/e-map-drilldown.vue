@@ -1,6 +1,8 @@
 <template>
     <div class="map-wrapper">
-        <div class="map-header"></div>
+        <div class="map-header">
+            <area-select></area-select>
+        </div>
         <div class="map-body">
             <echart-map></echart-map>
         </div>
@@ -8,9 +10,13 @@
 </template>
 <script>
 import EchartMap from './echart-map.vue'
+import AreaSelect from '_c/area-select'
 export default {
     name: 'EMapDrilldown',
-    components: { EchartMap },
+    components: { 
+        EchartMap,
+        AreaSelect
+    },
     data () {
         return {
 
