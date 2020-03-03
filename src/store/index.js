@@ -6,6 +6,7 @@ import mutations from './mutations'
 import actions from './actions'
 import user from './module/user'
 import saveInLocal from './plugin/saveInLocal'
+import saveInSession from './plugin/saveInSession'
 
 Vue.use(Vuex)
 
@@ -18,5 +19,5 @@ export default new Vuex.Store({
   modules: {
     user
   },
-  plugins: [ saveInLocal ]
+  plugins: [ saveInSession ]
 })
