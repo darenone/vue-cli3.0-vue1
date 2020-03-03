@@ -38,13 +38,13 @@ module.exports = {
     port: 4000,
     // proxy: 'http://localhost:4000', // 告诉开发服务器，将任何未知请求（没有匹配到静态文件的请求），都代理到这个url上，来满足跨域的请求
   },
-  configureWebpack: {
-    plugins: [
-      new webpack.ProvidePlugin({
-        $:"jquery",
-        jQuery:"jquery",
-        "windows.jQuery":"jquery"
-      })
-    ]
-  },
+  // configureWebpack: {
+  //   plugins: [
+  //     new webpack.ProvidePlugin({
+  //       $:"jquery",
+  //       jQuery:"jquery",
+  //       "windows.jQuery":"jquery"
+  //     })
+  //   ]
+  // },
 }
