@@ -5,6 +5,7 @@ import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
 import user from './module/user'
+import area from './module/area'
 import saveInLocal from './plugin/saveInLocal'
 import saveInSession from './plugin/saveInSession'
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
   mutations,
   actions,
   modules: {
-    user
+    user,
+    area
   },
   plugins: [ saveInSession ]
 })
