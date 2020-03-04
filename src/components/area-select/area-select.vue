@@ -122,7 +122,18 @@ export default {
             this.collapse = false
         },
         handleReset () {
-            this.initAreaName(this.selectedName)
+            if (this.selectedName) {
+                this.initAreaName(this.selectedName)
+            } else {
+                this.areaName = '中国'
+                // 取消选中
+                this.provinceCode = null
+                this.cityCode = null
+                this.districtCode = null
+                // 市和区县list置空
+                this.cityList = []
+                this.districtList = []
+            }
             this.collapse = false
         },
         handleOk () {

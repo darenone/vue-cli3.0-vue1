@@ -12,9 +12,11 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
+import $http from './$http'
 // import { Button, Table } from 'iview'
 // Vue.component('Button', Button)
 Vue.use(iView)
+Vue.use($http);
 
 library.add(fas, far, fab)
 

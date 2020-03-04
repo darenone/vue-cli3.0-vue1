@@ -11,7 +11,7 @@ const resolve = dir => {
 }
 
 // 引入webpack
-const webpack = require('webpack')
+// const webpack = require('webpack')
 
 
 
