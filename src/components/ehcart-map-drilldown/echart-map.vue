@@ -1,12 +1,20 @@
 <template>
-    <div class="map-wrapper" ref="chartMap"></div>
+    <div class="map-wrapper">
+        <div ref="chartMap" style="width: 100%;height: 100%;"></div>
+        <div class="link">
+            <template v-for="(item, index) in drillLink">
+                <span :key="index">{{ item }}</span>
+                <i :key="`icon-${index}`" class="icon ivu-icon ivu-icon-ios-arrow-forward"></i>
+            </template>
+        </div>
+    </div>
 </template>
 <script>
 const echarts = require('echarts')
-import $ from 'jquery'
 import china from '@/assets/json/china.json'
 import cityMap from './../../../public/china-main-city/china-main-city-map.js'
-console.log(cityMap)
+import setOption from './config'
+import { mapState, mapMutations } from 'vuex'
 export default {
     name: 'EchartMap',
     data () {
@@ -15,11 +23,18 @@ export default {
         }
     },
     computed: {
+        ...mapState('area', [
+            'drillLink',
+            'drillLink'
+        ]),
         myChart() {
             return echarts.init(this.$refs.chartMap);
         }
     },
     methods: {
+        ...mapMutations('area', [
+            'SET_DRILL_LINK'
+        ]),
         setSize() {
             this.myChart.resize();
         },
@@ -29,85 +44,10 @@ export default {
                 this.setSize();
             }
         },
-        renderLine () {
-            let option = {
-                title: {
-                    text: 'echar地图使用示例',
-                    subtext: '此demo来至于echart官方网站',
-                    sublink: 'https://gallery.echartsjs.com/editor.html?c=x_2hwwDQ9'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{b}<br/>{c} (p / km2)'
-                },
-                visualMap: {
-                    min: 800,
-                    max: 50000,
-                    text: ['High', 'Low'],
-                    realtime: false,
-                    calculable: true,
-                    inRange: {
-                        color: ['lightskyblue', 'yellow', 'orangered']
-                    }
-                },
-                series: [
-                    {
-                        name: '香港18区人口密度',
-                        type: 'map',
-                        mapType: '中国', // 自定义扩展图表类型
-                        label: {
-                            show: false
-                        },
-                        data: []
-                    }
-                ]
-            }
-            this.$nextTick(() => {
-                // 注册地图
-                echarts.registerMap("中国", china)
-                // 绘制地图
-                if (this.myChart) {
-                    this.myChart.clear();
-                    this.myChart.setOption(option);
-                    window.addEventListener("resize", () => { this.myChart.resize();});
-                }
-
-            })
-        },
         loadMap (name) {
             let promise
-            let option = {
-                title: {
-                    text: 'echar地图使用示例',
-                    subtext: '此demo来至于echart官方网站',
-                    sublink: 'https://gallery.echartsjs.com/editor.html?c=x_2hwwDQ9'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{b}<br/>{c} (p / km2)'
-                },
-                visualMap: {
-                    min: 800,
-                    max: 50000,
-                    text: ['High', 'Low'],
-                    realtime: false,
-                    calculable: true,
-                    inRange: {
-                        color: ['lightskyblue', 'yellow', 'orangered']
-                    }
-                },
-                series: [
-                    {
-                        name: '香港18区人口密度',
-                        type: 'map',
-                        mapType: name, // 自定义扩展图表类型
-                        label: {
-                            show: false
-                        },
-                        data: []
-                    }
-                ]
-            }
+            let option = setOption(name)
+            if (!cityMap[name]) return;
             promise = this.$http.get(`./china-main-city/${cityMap[name]}.json`).then(json => {
                 echarts.registerMap(name, json);
                 // mapCache[code] = json;
@@ -118,8 +58,10 @@ export default {
                 if (this.myChart) {
                     this.myChart.clear();
                     this.myChart.setOption(option, {lazyUpdate: true});
+                    this.myChart.off('click') // 先取消click再绑定
                     this.myChart.on('click', (params) => {
                         console.log(params.name)
+                        this.SET_DRILL_LINK(params.name)
                         this.loadMap(params.name)
                     })
                     window.addEventListener("resize", () => { this.myChart.resize();});
@@ -137,6 +79,7 @@ export default {
         // this.renderLine(); // 渲染图表
         this.resizeChart(); // 添加监听事件，监听窗口变化
         this.setSize(); // 初始化图形大小
+        console.log(this.drillLink)
     },
     beforeDestroy () {
         // 组件被销毁后解除监听事件
@@ -149,5 +92,12 @@ export default {
 .map-wrapper {
     width: 100%;
     height: 100%;
+    position: relative;
+    .link {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        z-index: 10;
+    }
 }
 </style>

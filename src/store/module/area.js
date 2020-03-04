@@ -1,5 +1,6 @@
 const state = {
-    selectedName: null
+    selectedName: null,
+    drillLink: ['中国']
 }
 const getters = {
     areaType: (state) => {
@@ -18,6 +19,9 @@ const getters = {
 const mutations = {
     SET_SELECTED_NAME (state, params) {
       state.selectedName = params
+    },
+    SET_DRILL_LINK (state, name) {
+        state.drillLink.push(name)
     }
 }
 const actions = {
