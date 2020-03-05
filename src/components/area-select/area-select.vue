@@ -28,7 +28,7 @@
 </template>
 <script>
 const _ = require('lodash')
-import chinaArea from '@/assets/json/china-area.json'
+import chinaArea from './../../../public/china-main-city/china-area.json'
 import { mapState, mapMutations } from 'vuex'
 export default {
     data () {
@@ -113,6 +113,7 @@ export default {
         },
         // 把区县筛选出来
         handleDistrict (pid) {
+            console.log(pid)
             this.districtList = [] // 先置空
             this.districtList = _.filter(chinaArea, (item) => {
                 return item.pId == pid

@@ -22,6 +22,12 @@ const mutations = {
     },
     SET_DRILL_LINK (state, name) {
         state.drillLink.push(name)
+    },
+    DELETE_DRILL_LINK (state, name) {
+        let index = state.drillLink.indexOf(name);
+        state.drillLink = state.drillLink.splice(0, index + 1)
+        // state.drillLink.splice
+        // console.log(state.drillLink.indexOf(name))
     }
 }
 const actions = {
