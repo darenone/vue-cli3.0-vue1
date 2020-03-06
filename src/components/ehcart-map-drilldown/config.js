@@ -26,6 +26,21 @@ const mapOption = {
             label: {
                 show: false
             },
+            itemStyle: {
+                normal: {
+                    labelLine: { show: false },
+                    areaColor: 'rgb(3, 39, 175)',
+                    borderWidth: "2",
+                    borderColor: '#fff',
+                    borderShadowColor: '#ccc',
+                    borderShadowBlur: '60',
+                    borderShadowOffsetX: '30',
+                    borderShadowOffsetY: '15',
+                    shadowColor: 'rgba(128, 217, 248, 1)',
+                    shadowOffsetX: [2, 2],
+                    shadowBlur: 10
+                }
+            },
             data: []
         }
     ]

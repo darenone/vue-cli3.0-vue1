@@ -28,7 +28,7 @@ const mutations = {
         state.drillLink = state.drillLink.splice(0, index + 1)
         // state.drillLink.splice
         // console.log(state.drillLink.indexOf(name))
-    }
+    },
 }
 const actions = {
     updateSelectedName ({ commit, state, rootState, dispatch }) {

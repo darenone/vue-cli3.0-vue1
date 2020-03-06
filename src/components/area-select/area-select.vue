@@ -34,7 +34,7 @@ export default {
     data () {
         return {
             collapse: false,
-            provinceList: [], // 省/直辖市
+            provinceList:  [], // 省/直辖市
             cityList: [], // 市
             districtList: [], // 区县
             areaName: '中国',
@@ -63,7 +63,9 @@ export default {
     },
     methods: {
         ...mapMutations('area', [
-            'SET_SELECTED_NAME'
+            'SET_SELECTED_NAME',
+            'DELETE_DRILL_LINK',
+            'SET_DRILL_LINK'
         ]),
         handleAClick () {
             this.collapse = !this.collapse
@@ -113,7 +115,6 @@ export default {
         },
         // 把区县筛选出来
         handleDistrict (pid) {
-            console.log(pid)
             this.districtList = [] // 先置空
             this.districtList = _.filter(chinaArea, (item) => {
                 return item.pId == pid
@@ -140,6 +141,57 @@ export default {
         handleOk () {
             this.SET_SELECTED_NAME(this.areaName)
             this.collapse = false
+            // 触发echart-map组件下钻
+            this.$bus.$emit('on-area-selected', this.okName)
+            this.setDrillLink(this.areaName)
+        },
+        setDrillLink(name) {
+            // 改变vuex里的drillLink
+            let reg1 = /\((.+?)\)/g // 匹配小括号
+            let reg2 = /\[(.+?)\]/g // 匹配中括号
+            let reg3 = /\{(.+?)\}/g // 匹配大括号
+            let areaType = reg1.exec(name)[1]
+            let areaCode = reg2.exec(name)[1]
+            let areaName = reg3.exec(name)[1]
+            switch (areaType) {
+                case '1':
+                    this.DELETE_DRILL_LINK('中国') // 先让drillLink回到初始值
+                    this.SET_DRILL_LINK(areaName)
+                    break;
+                case '2':
+                    let provinceCode = _.find(chinaArea, (item) => {
+                        return item.id == areaCode
+                    }).pId
+                    let provinceName = _.find(chinaArea, (item) => {
+                        return item.id == provinceCode
+                    }).name
+                    this.DELETE_DRILL_LINK('中国') // 先让drillLink回到初始值
+                    this.SET_DRILL_LINK(provinceName)
+                    this.SET_DRILL_LINK(areaName)
+                    break;
+                case '4':
+                    {
+                        let cityCode = _.find(chinaArea, (item) => {
+                        return item.id == areaCode
+                        }).pId
+                        let cityName = _.find(chinaArea, (item) => {
+                            return item.id == cityCode
+                        }).name
+                        let provinceCode = _.find(chinaArea, (item) => {
+                            return item.id == cityCode
+                        }).pId
+                        let provinceName = _.find(chinaArea, (item) => {
+                            return item.id == provinceCode
+                        }).name
+                        this.DELETE_DRILL_LINK('中国') // 先让drillLink回到初始值
+                        this.SET_DRILL_LINK(provinceName)
+                        this.SET_DRILL_LINK(cityName)
+                        this.SET_DRILL_LINK(areaName)
+                    }
+                    break;
+                default:
+                    break;
+            }
         },
         // 初始化区域选择
         initAreaName (name) {
@@ -151,6 +203,14 @@ export default {
             let areaName = reg3.exec(name)[1]
             this.areaName = name
             switch (areaType) {
+                case '0':
+                    /**
+                     * 如果是中国
+                     */
+                    this.provinceCode = null
+                    this.cityCode = null
+                    this.districtCode = null
+                    break;
                 case '1':
                     /**
                      * 如果是省或直辖市，默认选中即可
@@ -195,11 +255,22 @@ export default {
             }
         }
     },
+    watch: {
+        // selectedName (val) {
+        //     console.log('名字变化了', val)
+        //     this.initAreaName(val)
+        // }
+    },
     mounted () {
         this.handleProvince()
         if (this.selectedName) {
             this.initAreaName(this.selectedName)
         }
+        // echart-map组件下钻的时候触发
+        this.$bus.$on('on-load-map', () => {
+            // console.log('下钻了')
+            this.initAreaName(this.selectedName)
+        })
     }
 }
 </script>

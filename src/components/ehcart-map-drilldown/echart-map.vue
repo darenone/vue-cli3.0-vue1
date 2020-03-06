@@ -11,8 +11,10 @@
 </template>
 <script>
 const echarts = require('echarts')
+const _ = require('lodash')
 import china from './../../../public/china-main-city/china.json'
 import cityMap from './../../../public/china-main-city/china-main-city-map.js'
+import chinaArea from './../../../public/china-main-city/china-area.json'
 import setOption from './config'
 import { mapState, mapMutations } from 'vuex'
 export default {
@@ -37,7 +39,8 @@ export default {
     methods: {
         ...mapMutations('area', [
             'SET_DRILL_LINK',
-            'DELETE_DRILL_LINK'
+            'DELETE_DRILL_LINK',
+            'SET_SELECTED_NAME'
         ]),
         setSize() {
             this.myChart.resize();
@@ -51,6 +54,7 @@ export default {
         selectName (name) {
             this.loadMap(name)
             this.DELETE_DRILL_LINK(name)
+            this.handleAreaName(name)
         },
         loadMap (name) {
             let promise
@@ -59,7 +63,7 @@ export default {
             promise = this.$http.get(`./china-main-city/${cityMap[name]}.json`).then(json => {
                 echarts.registerMap(name, json);
                 // mapCache[code] = json;
-                console.log(json)
+                // console.log(json)
                 return json
             })
             promise.then(json => {
@@ -68,9 +72,11 @@ export default {
                     this.myChart.setOption(option, {lazyUpdate: true});
                     this.myChart.off('click') // 先取消click再绑定
                     this.myChart.on('click', (params) => {
-                        console.log(params)
+                        // console.log(params)
+                        // console.log('点击了')
                         this.SET_DRILL_LINK(params.name)
                         this.loadMap(params.name)
+                        this.handleAreaName(params.name)
                     })
                     window.addEventListener("resize", () => { this.myChart.resize();});
                 }
@@ -80,14 +86,29 @@ export default {
             })
 
             return promise
+        },
+        handleAreaName (name) {
+            // 根据name把其拼接成 (4)-[1860]-{顺河回族区}的形式
+            let areaName = []
+            areaName = _.filter(chinaArea, (item) => {
+                return item.name == name
+            })
+            if (areaName.length) {
+                // console.log(areaName)
+                this.SET_SELECTED_NAME(`(${areaName[0].areaType})-[${areaName[0].id}]-{${areaName[0].name}}`)
+                this.$bus.$emit('on-load-map')
+            } else {
+                console.log('未匹配到名字', name)
+            }
         }
     },
     mounted () {
         this.loadMap('中国');
         this.resizeChart(); // 添加监听事件，监听窗口变化
         this.setSize(); // 初始化图形大小
-        console.log(this.drillLink)
-        console.log(this.selectedName)
+        this.$bus.$on('on-area-selected', (name) => {
+            this.loadMap(name)
+        })
     },
     beforeDestroy () {
         // 组件被销毁后解除监听事件
